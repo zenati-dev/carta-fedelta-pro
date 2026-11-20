@@ -48,7 +48,7 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #ffb3
 .kpi{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
 .kpi div{background:var(--card);border:2px solid var(--line);border-radius:18px;padding:14px}
 .kpi b{display:block;font:700 30px 'Space Grotesk'}
-nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:430px;height:84px;background:var(--card);border-top:2px solid var(--line);display:grid;grid-template-columns:repeat(4,1fr);z-index:5}
+nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:430px;height:84px;background:var(--card);border-top:2px solid var(--line);display:grid;grid-template-columns:repeat(auto-fit,minmax(0,1fr));z-index:5}
 @media(min-width:600px){nav{position:absolute;left:0;transform:none}}
 nav button{background:none;border:0;color:var(--soft);font:600 14px Inter;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;cursor:pointer}
 nav button span{font-size:24px}nav button[aria-current=page]{color:var(--or);font-weight:800}
@@ -118,6 +118,7 @@ input[type=color]{padding:4px;height:52px}
 <section id="v-locale" class="pad hide">
 <h1>Pannello del locale 🏪</h1>
 <p class="sub">Per il titolare e il barista.</p>
+<div class="card" style="margin-top:14px;text-align:center;background:var(--orL)"><div class="m">Codice di oggi (non mostrarlo ai clienti)</div><div id="oggi" style="font:700 44px 'Space Grotesk';letter-spacing:.2em;color:var(--or)"></div><div class="m">Cambia da solo ogni giorno a mezzanotte</div></div>
 <div class="seg" role="group" aria-label="Sezioni del pannello">
 <button data-tab="cassa" aria-pressed="true">Cassa</button>
 <button data-tab="stat" aria-pressed="false">Numeri</button>
@@ -167,7 +168,6 @@ input[type=color]{padding:4px;height:52px}
 <div><label for="s-lng">Longitudine</label><input id="s-lng" type="number" step="any"></div>
 </div>
 <label>Logo</label><div class="g2" id="s-logo"><button type="button" class="card" data-logo="0" style="height:120px;padding:8px;cursor:pointer"></button><button type="button" class="card" data-logo="1" style="height:120px;padding:8px;cursor:pointer"></button></div>
-<label for="s-pinset">PIN del barista (4 cifre)</label><input id="s-pinset" inputmode="numeric" maxlength="4">
 <label for="s-gid">Google Place ID (per le recensioni)</label><input id="s-gid" placeholder="ChIJ...">
 <h2>Premi</h2>
 <div id="ed-premi" class="list" style="margin-top:0"></div>
@@ -181,16 +181,17 @@ input[type=color]{padding:4px;height:52px}
 <button data-go="carta" aria-current="page"><span>💳</span>Carta</button>
 <button data-go="premi"><span>🎁</span>Premi</button>
 <button data-go="storico"><span>📊</span>Storico</button>
-<button data-go="locale"><span>🏪</span>Locale</button>
+<button data-go="locale" id="nav-loc" class="hide"><span>🏪</span>Locale</button>
 </nav>
 </div>
 
 <div id="pinbox" class="hide" role="dialog" aria-modal="true" aria-labelledby="pin-t" style="position:fixed;inset:0;background:rgba(20,10,5,.6);z-index:8;display:flex;align-items:flex-end;justify-content:center">
 <form id="f-pin" class="card" style="width:min(430px,100%);border-radius:28px 28px 0 0;padding:24px 20px 32px">
 <h2 id="pin-t" style="margin-top:0">Aggiungi punti</h2>
-<p class="m" style="margin:0">Dai il telefono al barista: inserisce l'importo e il suo PIN.</p>
+<p class="m" style="margin:0">Al barista: tocca l'importo e scrivi il codice del giorno.</p>
+<div class="g2" id="quick" style="grid-template-columns:repeat(5,minmax(0,1fr));margin-top:14px"><button type="button" class="sm x" data-q="1">1 €</button><button type="button" class="sm x" data-q="2">2 €</button><button type="button" class="sm x" data-q="3">3 €</button><button type="button" class="sm x" data-q="5">5 €</button><button type="button" class="sm x" data-q="10">10 €</button></div>
 <label for="p-eur">Importo pagato (€)</label><input id="p-eur" type="number" inputmode="decimal" min="0" step="0.10" placeholder="Es. 2,50">
-<label for="p-pin">PIN del barista</label><input id="p-pin" type="password" inputmode="numeric" maxlength="4" autocomplete="off" placeholder="••••">
+<label for="p-pin">Codice del giorno</label><input id="p-pin" type="password" inputmode="numeric" maxlength="4" autocomplete="off" placeholder="••••">
 <p id="p-err" class="m" style="color:#b3261e;margin:8px 0 0" aria-live="polite"></p>
 <button class="btn" type="submit">Conferma</button>
 <button class="btn alt" type="button" id="p-x">Annulla</button>
@@ -241,7 +242,7 @@ $('k-pre').textContent=L.filter(l=>l.k==='r').length;
 $('k-eur').textContent=L.reduce((a,l)=>a+(l.eur||0),0).toFixed(0)+' €';
 }
 
-function fillCfg(){const c=C();$('s-nome').value=c.nome;$('s-col').value=c.col;$('s-eur').value=c.eur;$('s-bon').value=c.bon;$('s-rag').value=c.rag;$('s-lat').value=c.lat;$('s-lng').value=c.lng;$('s-gid').value=c.gid;$('s-pinset').value=c.pin||'';for(const b of document.querySelectorAll('[data-logo]')){b.innerHTML=LOGHI[+b.dataset.logo];b.style.borderColor=(+b.dataset.logo===(c.logo||0))?'var(--or)':'';b.setAttribute('aria-pressed',+b.dataset.logo===(c.logo||0))}
+function fillCfg(){const c=C();$('s-nome').value=c.nome;$('s-col').value=c.col;$('s-eur').value=c.eur;$('s-bon').value=c.bon;$('s-rag').value=c.rag;$('s-lat').value=c.lat;$('s-lng').value=c.lng;$('s-gid').value=c.gid;for(const b of document.querySelectorAll('[data-logo]')){b.innerHTML=LOGHI[+b.dataset.logo];b.style.borderColor=(+b.dataset.logo===(c.logo||0))?'var(--or)':'';b.setAttribute('aria-pressed',+b.dataset.logo===(c.logo||0))}
 $('ed-premi').innerHTML=c.premi.map((p,i)=>`<div class="card"><div class="g2" style="grid-template-columns:64px minmax(0,1fr)"><div><label for="pi${i}" style="margin-top:0">Icona</label><input id="pi${i}" data-f="ic" data-i="${i}" value="${esc(p.ic)}"></div><div><label for="pt${i}" style="margin-top:0">Premio</label><input id="pt${i}" data-f="t" data-i="${i}" value="${esc(p.t)}"></div></div><div class="row" style="margin-top:10px;align-items:flex-end"><div style="flex:1"><label for="pp${i}" style="margin-top:0">Punti</label><input id="pp${i}" type="number" min="1" data-f="p" data-i="${i}" value="${p.p}"></div><button type="button" class="sm x" data-del="${i}" aria-label="Elimina premio">✕</button></div></div>`).join('')}
 
 let tmr;
@@ -276,15 +277,26 @@ document.addEventListener('input',e=>{const f=e.target.dataset.f;if(f){const p=C
 $('b-addp').onclick=()=>{C().premi.push({ic:'🎁',t:'Nuovo premio',p:100});fillCfg()};
 $('t-imp').onsubmit=e=>{e.preventDefault();const c=C(),n=x=>parseFloat($(x).value);
 c.nome=$('s-nome').value.trim()||DEF.nome;c.col=$('s-col').value;c.eur=n('s-eur')>0?n('s-eur'):DEF.eur;c.bon=Math.max(0,parseInt($('s-bon').value)||0);c.rag=Math.max(20,parseInt($('s-rag').value)||80);
-if(!isNaN(n('s-lat')))c.lat=n('s-lat');if(!isNaN(n('s-lng')))c.lng=n('s-lng');c.gid=$('s-gid').value.trim();const np=$('s-pinset').value.trim();if(/^\d{4}$/.test(np))c.pin=np;
+if(!isNaN(n('s-lat')))c.lat=n('s-lat');if(!isNaN(n('s-lng')))c.lng=n('s-lng');c.gid=$('s-gid').value.trim();
 save();render();toast('Impostazioni salvate ✅','La carta dei clienti è aggiornata','✅')};
+const SEG='lillo-7Q4z-2026';
+function codiceOggi(d){d=d||new Date();const k=SEG+d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate();let h=2166136261;for(const ch of k){h^=ch.charCodeAt(0);h=Math.imul(h,16777619)>>>0}return String(h%10000).padStart(4,'0')}
+let gest=false;try{gest=localStorage.getItem('mrlillo.gest')==='1'}catch(e){}
+if(location.hash==='#gestore-lillo'){gest=true;try{localStorage.setItem('mrlillo.gest','1')}catch(e){}}
+if(gest){$('nav-loc').classList.remove('hide')}
+$('oggi').textContent=codiceOggi();
 let tries=0;
-$('b-pin').onclick=()=>{$('p-eur').value='';$('p-pin').value='';$('p-err').textContent='';$('pinbox').classList.remove('hide');$('p-eur').focus()};
+$('b-pin').onclick=()=>{$('p-eur').value='';$('p-pin').value='';$('p-err').textContent='';$('pinbox').classList.remove('hide');};
+document.addEventListener('click',e=>{const q=e.target.closest('[data-q]');if(q){$('p-eur').value=q.dataset.q;for(const b of document.querySelectorAll('[data-q]'))b.style.background=b===q?'var(--orL)':'';$('p-pin').focus()}});
+$('p-pin').addEventListener('input',()=>{if($('p-pin').value.length===4&&parseFloat($('p-eur').value)>0)$('f-pin').requestSubmit()});
 $('p-x').onclick=()=>$('pinbox').classList.add('hide');
 $('f-pin').onsubmit=e=>{e.preventDefault();const v=parseFloat(String($('p-eur').value).replace(',','.'));
 if(!(v>0)){$('p-err').textContent='Scrivi l\'importo pagato.';return}
 if(tries>=5){$('p-err').textContent='Troppi tentativi. Riprova più tardi.';return}
-if($('p-pin').value!==String(C().pin)){tries++;$('p-err').textContent='PIN non corretto.';return}
+if($('p-pin').value!==codiceOggi()){tries++;$('p-err').textContent='Codice non corretto.';return}
+if(v>15){$('p-err').textContent='Massimo 15 € per volta.';return}
+if(Date.now()-(S.lastPin||0)<30*60*1000){$('p-err').textContent='Punti già aggiunti da poco. Riprova tra 30 minuti.';return}
+S.lastPin=Date.now();
 tries=0;const n=Math.floor(v/C().eur);$('pinbox').classList.add('hide');add(n,'☕','Spesa di '+v.toFixed(2).replace('.',',')+' €','s',v);toast('+'+n+' punti 🎉','Grazie per la visita!','☕')};
 $('b-near').onclick=()=>{try{'Notification'in window&&Notification.permission==='default'&&Notification.requestPermission()}catch(e){}arrivo()};
 $('f-cassa').onsubmit=e=>{e.preventDefault();const v=parseFloat(String($('imp').value).replace(',','.'));if(!(v>0))return;
@@ -292,7 +304,7 @@ const cc=$('ccli').value.trim().toUpperCase();if(cc&&cc!==S.code){toast('Codice 
 const n=Math.floor(v/C().eur);add(n,'☕','Spesa di '+v.toFixed(2).replace('.',',')+' €','s',v);$('imp').value='';toast('+'+n+' punti 🎉','Grazie per la visita!','☕')};
 $('b-reset').onclick=()=>{S={pts:0,log:[],lastAuto:0,code:S.code,cfg:C()};save();render();toast('Carta azzerata','Puoi ricominciare la prova','🔄')};
 render();watch();
-if(location.hash==='#locale')go('locale');
+if(gest&&(location.hash==='#locale'||location.hash==='#gestore-lillo'))go('locale');
 }
 </script>
 </body>
