@@ -12,10 +12,10 @@
    PICTURE: la carta punti grande + radar del locale
    COLOUR and TYPE: arancione bruciato, viola, teal su crema; Space Grotesk + Inter
    LAYOUT: una colonna da telefono, menu fisso in basso */
-:root{color-scheme:light dark;--bg:light-dark(#fff7ee,#17111f);--card:light-dark(#fff,#241a33);--line:light-dark(#f0e2d2,#3a2d4d);--ink:light-dark(#1d1530,#f6f0ff);--soft:light-dark(#3d3350,#cfc4e3);--or:#c2530a;--orL:light-dark(#ffe3cc,#4a2414);--vi:#5b25b8;--te:light-dark(#0b6a61,#5fe3d3);--teL:light-dark(#d2f2ee,#103a37)}
+:root{color-scheme:light dark;--bg:light-dark(#fff7ee,#17111f);--card:light-dark(#fff,#241a33);--line:light-dark(#f0e2d2,#3a2d4d);--ink:light-dark(#1d1530,#f6f0ff);--soft:light-dark(#3d3350,#cfc4e3);--or:#b34a06;--orL:light-dark(#ffe3cc,#4a2414);--vi:#5b25b8;--te:light-dark(#b34a06,#ffb070);--teL:light-dark(#ffe3cc,#4a2414)}
 :root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
 *{box-sizing:border-box;min-width:0}
-body{margin:0;background:light-dark(#2b1a12,#0b0810);color:var(--ink);font:16px/1.5 Inter,system-ui,sans-serif;overflow-x:clip}
+body{margin:0;background:light-dark(#3a1d0a,#0b0810);color:var(--ink);font:16px/1.5 Inter,system-ui,sans-serif;overflow-x:clip}
 .app{max-width:430px;min-height:100vh;margin:0 auto;background:var(--bg);position:relative;padding-bottom:100px}
 @media(min-width:600px){.app{margin:24px auto;min-height:860px;border-radius:36px;overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,.45)}}
 .awn{height:72px;background:repeating-linear-gradient(90deg,var(--brand,#ff7a1a) 0 44px,#fff4e8 44px 88px)}
@@ -25,12 +25,12 @@ h1{font:700 30px/1.1 'Space Grotesk',sans-serif;margin:8px 0 4px;text-wrap:balan
 h2{font:700 20px/1.2 'Space Grotesk',sans-serif;margin:24px 0 8px}
 .sub{color:var(--soft);font-size:17px;margin:0}
 .card{background:var(--card);border:2px solid var(--line);border-radius:20px;padding:16px}
-.big{margin-top:16px;border-radius:26px;padding:22px;background:linear-gradient(135deg,var(--vi),#0b6a61);color:#fff}
+.big{margin-top:16px;border-radius:26px;padding:22px;background:linear-gradient(135deg,var(--brand,#f47b20),var(--or));color:#fff;box-shadow:0 12px 30px rgba(180,74,6,.3)}
 .big .n{font:700 clamp(44px,13vw,60px)/1 'Space Grotesk',sans-serif;margin-top:6px}
-.bar{height:12px;border-radius:6px;background:rgba(255,255,255,.3);margin-top:14px}.bar i{display:block;height:12px;border-radius:6px;background:#ffb347;transition:width .6s}
+.bar{height:12px;border-radius:6px;background:rgba(255,255,255,.3);margin-top:14px}.bar i{display:block;height:12px;border-radius:6px;background:#fff;transition:width .6s}
 .btn{display:flex;align-items:center;justify-content:center;width:100%;min-height:58px;border:0;border-radius:30px;background:var(--or);color:#fff;font:800 18px Inter,sans-serif;cursor:pointer;margin-top:14px;text-decoration:none}
 .btn.alt{background:var(--card);color:var(--ink);border:2px solid var(--line)}
-.btn.te{background:#0b6a61}
+.btn.te{background:var(--or)}
 button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #ffb347;outline-offset:3px}
 .row{display:flex;align-items:center;gap:14px}
 .ic{width:56px;height:56px;flex:none;border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:30px;background:var(--orL)}
@@ -49,7 +49,7 @@ nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-w
 nav button{background:none;border:0;color:var(--soft);font:600 14px Inter;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;cursor:pointer}
 nav button span{font-size:24px}nav button[aria-current=page]{color:var(--or);font-weight:800}
 .toast{position:fixed;top:12px;left:50%;transform:translate(-50%,-160%);width:min(400px,calc(100% - 24px));background:#1d1530;color:#fff;border-radius:24px;padding:16px;display:flex;gap:14px;align-items:center;box-shadow:0 16px 40px rgba(0,0,0,.4);z-index:9;transition:transform .45s cubic-bezier(.2,1.4,.4,1)}
-.toast.on{transform:translate(-50%,0)}.toast .ic{background:#ff7a1a}
+.toast.on{transform:translate(-50%,0)}.toast .ic{background:var(--brand,#ff7a1a)}
 .radar{width:190px;height:190px;margin:18px auto 0;border-radius:50%;background:var(--orL);display:flex;align-items:center;justify-content:center;position:relative}
 .radar::before{content:"";position:absolute;inset:0;border-radius:50%;border:3px solid #ff7a1a;animation:p 2s infinite}
 @keyframes p{from{transform:scale(.5);opacity:1}to{transform:scale(1.15);opacity:0}}
