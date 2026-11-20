@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#f47b20">
+<title>Mr. Lillo Café – Carta Fedeltà</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;600;700;800&display=swap">
+<style>
+/* VOICE: caldo, semplice, da bar italiano di quartiere
+   IDEA: la tenda a righe del bar e la tessera timbri al bancone
+   PICTURE: la carta punti grande + radar del locale
+   COLOUR and TYPE: arancione bruciato, viola, teal su crema; Space Grotesk + Inter
+   LAYOUT: una colonna da telefono, menu fisso in basso */
+:root{color-scheme:light dark;--bg:light-dark(#fff7ee,#17111f);--card:light-dark(#fff,#241a33);--line:light-dark(#f0e2d2,#3a2d4d);--ink:light-dark(#1d1530,#f6f0ff);--soft:light-dark(#3d3350,#cfc4e3);--or:#c2530a;--orL:light-dark(#ffe3cc,#4a2414);--vi:#5b25b8;--te:light-dark(#0b6a61,#5fe3d3);--teL:light-dark(#d2f2ee,#103a37)}
+:root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
+*{box-sizing:border-box;min-width:0}
+body{margin:0;background:light-dark(#2b1a12,#0b0810);color:var(--ink);font:16px/1.5 Inter,system-ui,sans-serif;overflow-x:clip}
+.app{max-width:430px;min-height:100vh;margin:0 auto;background:var(--bg);position:relative;padding-bottom:100px}
+@media(min-width:600px){.app{margin:24px auto;min-height:860px;border-radius:36px;overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,.45)}}
+.awn{height:72px;background:repeating-linear-gradient(90deg,var(--brand,#ff7a1a) 0 44px,#fff4e8 44px 88px)}
+.scal{height:14px;background:repeating-radial-gradient(circle at 22px -8px,var(--brand,#ff7a1a) 0 20px,transparent 21px 44px)}
+.pad{padding:8px 20px 0}
+h1{font:700 30px/1.1 'Space Grotesk',sans-serif;margin:8px 0 4px;text-wrap:balance}
+h2{font:700 20px/1.2 'Space Grotesk',sans-serif;margin:24px 0 8px}
+.sub{color:var(--soft);font-size:17px;margin:0}
+.card{background:var(--card);border:2px solid var(--line);border-radius:20px;padding:16px}
+.big{margin-top:16px;border-radius:26px;padding:22px;background:linear-gradient(135deg,var(--vi),#0b6a61);color:#fff}
+.big .n{font:700 clamp(44px,13vw,60px)/1 'Space Grotesk',sans-serif;margin-top:6px}
+.bar{height:12px;border-radius:6px;background:rgba(255,255,255,.3);margin-top:14px}.bar i{display:block;height:12px;border-radius:6px;background:#ffb347;transition:width .6s}
+.btn{display:flex;align-items:center;justify-content:center;width:100%;min-height:58px;border:0;border-radius:30px;background:var(--or);color:#fff;font:800 18px Inter,sans-serif;cursor:pointer;margin-top:14px;text-decoration:none}
+.btn.alt{background:var(--card);color:var(--ink);border:2px solid var(--line)}
+.btn.te{background:#0b6a61}
+button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #ffb347;outline-offset:3px}
+.row{display:flex;align-items:center;gap:14px}
+.ic{width:56px;height:56px;flex:none;border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:30px;background:var(--orL)}
+.list{display:flex;flex-direction:column;gap:12px;margin-top:16px}
+.t{font-weight:700;font-size:18px}.m{font-size:15px;color:var(--soft)}
+.sm{min-height:48px;padding:0 18px;border:0;border-radius:24px;background:var(--or);color:#fff;font:800 16px Inter;cursor:pointer;white-space:nowrap}
+.sm:disabled{background:var(--line);color:var(--soft);cursor:not-allowed}
+.sm.x{background:var(--card);color:var(--ink);border:2px solid var(--line);min-width:48px;padding:0}
+.mini{height:8px;border-radius:4px;background:var(--line);margin-top:8px}.mini i{display:block;height:8px;border-radius:4px;background:var(--te)}
+.plus{color:var(--te);font-weight:800;font-size:18px;white-space:nowrap}.minus{color:#e0622a;font-weight:800;font-size:18px;white-space:nowrap}
+.kpi{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.kpi div{background:var(--card);border:2px solid var(--line);border-radius:18px;padding:14px}
+.kpi b{display:block;font:700 30px 'Space Grotesk'}
+nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:430px;height:84px;background:var(--card);border-top:2px solid var(--line);display:grid;grid-template-columns:repeat(4,1fr);z-index:5}
+@media(min-width:600px){nav{position:absolute;left:0;transform:none}}
+nav button{background:none;border:0;color:var(--soft);font:600 14px Inter;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;cursor:pointer}
+nav button span{font-size:24px}nav button[aria-current=page]{color:var(--or);font-weight:800}
+.toast{position:fixed;top:12px;left:50%;transform:translate(-50%,-160%);width:min(400px,calc(100% - 24px));background:#1d1530;color:#fff;border-radius:24px;padding:16px;display:flex;gap:14px;align-items:center;box-shadow:0 16px 40px rgba(0,0,0,.4);z-index:9;transition:transform .45s cubic-bezier(.2,1.4,.4,1)}
+.toast.on{transform:translate(-50%,0)}.toast .ic{background:#ff7a1a}
+.radar{width:190px;height:190px;margin:18px auto 0;border-radius:50%;background:var(--orL);display:flex;align-items:center;justify-content:center;position:relative}
+.radar::before{content:"";position:absolute;inset:0;border-radius:50%;border:3px solid #ff7a1a;animation:p 2s infinite}
+@keyframes p{from{transform:scale(.5);opacity:1}to{transform:scale(1.15);opacity:0}}
+@media(prefers-reduced-motion:reduce){.radar::before{animation:none}.toast,.bar i{transition:none}}
+.radar b{width:92px;height:92px;border-radius:50%;background:var(--or);display:flex;align-items:center;justify-content:center;font-size:44px}
+.qrbox{background:#fff;padding:14px;border-radius:18px;width:max-content;margin:16px auto 0}
+.code{text-align:center;font:700 26px 'Space Grotesk';letter-spacing:.12em;margin-top:8px}
+label{font-weight:700;display:block;margin-top:14px}
+input{width:100%;min-height:52px;font:16px Inter;border:2px solid var(--line);border-radius:14px;padding:0 14px;background:var(--card);color:var(--ink);margin-top:6px}
+input[type=color]{padding:4px;height:52px}
+.g2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.note{font-size:13px;color:var(--soft);margin-top:16px}
+.seg{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;background:var(--line);padding:4px;border-radius:16px;margin-top:14px}
+.seg button{min-height:44px;border:0;border-radius:12px;background:none;color:var(--ink);font:700 15px Inter;cursor:pointer}
+.seg button[aria-pressed=true]{background:var(--card)}
+.hide{display:none}
+</style>
+</head>
+<body>
+<div class="app">
+<div class="awn"></div><div class="scal"></div>
+
+<section id="v-carta" class="pad">
+<h1 id="hello">Ciao! 👋</h1>
+<p class="sub" id="state">Avvicinati al locale: la carta si accende da sola.</p>
+<div id="logo" style="width:200px;height:200px;margin:18px auto 0;filter:drop-shadow(0 10px 20px rgba(196,80,10,.35))"></div>
+<div class="big" aria-live="polite">
+<div style="font-size:14px;letter-spacing:.06em" id="cardname">CARTA FEDELTÀ</div>
+<div class="n"><span id="pts">0</span> <span style="font-size:20px">punti</span></div>
+<div class="bar"><i id="pbar" style="width:0"></i></div>
+<div style="font-size:15px;margin-top:8px" id="next"></div>
+</div>
+<button class="btn" data-go="qr">Mostra il QR alla cassa</button>
+<button class="btn alt" id="b-near">📍 Sono arrivato al locale</button>
+<div class="card" style="margin-top:16px">
+<div class="row"><div class="ic" style="background:var(--teL)">⭐</div><div style="flex:1"><div class="t">Ti è piaciuto?</div><div class="m">Raccontalo su Google: ci aiuti tantissimo.</div></div></div>
+<a class="btn te" id="b-rev" href="#" target="_blank" rel="noopener">⭐ Lascia una recensione</a>
+</div>
+<p class="note">Il pulsante 📍 serve per la prova. Online, con la posizione attiva, la carta si accende da sola vicino al locale.</p>
+</section>
+
+<section id="v-qr" class="pad hide">
+<h1>Il tuo QR</h1>
+<p class="sub">Mostralo alla cassa: il barista aggiunge i punti.</p>
+<div class="qrbox" id="qr"></div>
+<div class="code" id="ccode"></div>
+<button class="btn alt" data-go="carta">Torna alla carta</button>
+</section>
+
+<section id="v-premi" class="pad hide">
+<h1>I tuoi premi 🎁</h1>
+<p class="sub">Hai <b id="pts2">0</b> punti</p>
+<div class="list" id="premi"></div>
+</section>
+
+<section id="v-storico" class="pad hide">
+<h1>I tuoi punti 📊</h1>
+<div class="list" id="storico"></div>
+</section>
+
+<section id="v-locale" class="pad hide">
+<h1>Pannello del locale 🏪</h1>
+<p class="sub">Per il titolare e il barista.</p>
+<div class="seg" role="group" aria-label="Sezioni del pannello">
+<button data-tab="cassa" aria-pressed="true">Cassa</button>
+<button data-tab="stat" aria-pressed="false">Numeri</button>
+<button data-tab="imp" aria-pressed="false">Impostazioni</button>
+</div>
+
+<div id="t-cassa">
+<form id="f-cassa" class="card" style="margin-top:16px">
+<label for="ccli" style="margin-top:0">Codice cliente</label>
+<input id="ccli" autocomplete="off" placeholder="Es. K7Q2XA">
+<label for="imp">Importo speso (€)</label>
+<input id="imp" type="number" inputmode="decimal" min="0" step="0.10" placeholder="Es. 4,50">
+<p class="m" style="margin:8px 0 0" id="regola"></p>
+<button class="btn" type="submit">Aggiungi punti</button>
+</form>
+<h2>QR da bancone</h2>
+<div class="card" style="text-align:center">
+<div class="m">Stampalo per vetrina, bancone e tavoli: il cliente inquadra e la carta si apre, senza scaricare niente.</div>
+<div class="qrbox" id="qrb"></div>
+</div>
+</div>
+
+<div id="t-stat" class="hide">
+<h2>Questo mese</h2>
+<div class="kpi">
+<div><span class="m">Visite</span><b id="k-vis">0</b></div>
+<div><span class="m">Punti dati</span><b id="k-pts">0</b></div>
+<div><span class="m">Premi presi</span><b id="k-pre">0</b></div>
+<div><span class="m">Incasso registrato</span><b id="k-eur">0 €</b></div>
+</div>
+<p class="note">Con il database online qui vedrai i numeri di tutti i clienti del locale.</p>
+</div>
+
+<form id="t-imp" class="hide">
+<h2>Il locale</h2>
+<label for="s-nome">Nome del locale</label><input id="s-nome">
+<div class="g2">
+<div><label for="s-col">Colore</label><input id="s-col" type="color"></div>
+<div><label for="s-eur">€ per 1 punto</label><input id="s-eur" type="number" step="0.10" min="0.10"></div>
+</div>
+<div class="g2">
+<div><label for="s-bon">Punti all'arrivo</label><input id="s-bon" type="number" min="0"></div>
+<div><label for="s-rag">Raggio (metri)</label><input id="s-rag" type="number" min="20"></div>
+</div>
+<div class="g2">
+<div><label for="s-lat">Latitudine</label><input id="s-lat" type="number" step="any"></div>
+<div><label for="s-lng">Longitudine</label><input id="s-lng" type="number" step="any"></div>
+</div>
+<label>Logo</label><div class="g2" id="s-logo"><button type="button" class="card" data-logo="0" style="height:120px;padding:8px;cursor:pointer"></button><button type="button" class="card" data-logo="1" style="height:120px;padding:8px;cursor:pointer"></button></div>
+<label for="s-gid">Google Place ID (per le recensioni)</label><input id="s-gid" placeholder="ChIJ...">
+<h2>Premi</h2>
+<div id="ed-premi" class="list" style="margin-top:0"></div>
+<button type="button" class="btn alt" id="b-addp">+ Aggiungi un premio</button>
+<button class="btn" type="submit">Salva impostazioni</button>
+<button type="button" class="btn alt" id="b-reset">Azzera la carta di prova</button>
+</form>
+</section>
+
+<nav aria-label="Menu">
+<button data-go="carta" aria-current="page"><span>💳</span>Carta</button>
+<button data-go="premi"><span>🎁</span>Premi</button>
+<button data-go="storico"><span>📊</span>Storico</button>
+<button data-go="locale"><span>🏪</span>Locale</button>
+</nav>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="assertive">
+<div class="ic">🎉</div>
+<div><div style="font-size:13px;font-weight:600;color:#ffd2ad" id="tn">adesso</div>
+<div style="font-size:19px;font-weight:800" id="tt"></div>
+<div style="font-size:15px;color:#f1ecff" id="ts"></div></div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script>
+{
+const KEY='cartaPro.mrlillo';
+const LOGHI=['<svg viewBox="0 0 200 200" width="100%" height="100%" role="img" aria-label="Logo Café Mr. Lillo"><circle cx="100" cy="100" r="99" fill="#f47b20"/><circle cx="100" cy="100" r="89" fill="none" stroke="#fff" stroke-width="2.5"/><circle cx="100" cy="100" r="84" fill="none" stroke="#fff" stroke-width="1" stroke-dasharray="2 5"/><text x="100" y="52" text-anchor="middle" font-family="Inter,sans-serif" font-weight="800" font-size="15" letter-spacing="6" fill="#fff">CAFÉ</text><path d="M78 66c-5 6 5 9 0 15M92 62c-5 6 5 9 0 15M106 66c-5 6 5 9 0 15" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round"/><path d="M70 86h52v10a26 26 0 0 1-52 0z" fill="#fff"/><path d="M122 89h6a9 9 0 0 1 0 18h-8" fill="none" stroke="#fff" stroke-width="5"/><rect x="64" y="121" width="64" height="4" rx="2" fill="#fff"/><text x="100" y="156" text-anchor="middle" font-family="Space Grotesk,sans-serif" font-weight="700" font-size="30" fill="#fff">Mr. Lillo</text><text x="100" y="174" text-anchor="middle" font-family="Inter,sans-serif" font-weight="700" font-size="9" letter-spacing="4" fill="#fff">ROMA</text></svg>','<svg viewBox="0 0 200 200" width="100%" height="100%" role="img" aria-label="Logo Café Mr. Lillo"><circle cx="100" cy="100" r="99" fill="#1d1530"/><circle cx="100" cy="100" r="82" fill="#f47b20"/><circle cx="100" cy="100" r="74" fill="none" stroke="#1d1530" stroke-width="2"/><text x="100" y="74" text-anchor="middle" font-family="Inter,sans-serif" font-weight="800" font-size="14" letter-spacing="6" fill="#1d1530">CAFÉ</text><text x="100" y="116" text-anchor="middle" font-family="Space Grotesk,sans-serif" font-weight="700" font-size="40" fill="#fff">Mr.</text><text x="100" y="148" text-anchor="middle" font-family="Space Grotesk,sans-serif" font-weight="700" font-size="36" fill="#1d1530">Lillo</text><circle cx="100" cy="164" r="3" fill="#fff"/><circle cx="12" cy="100" r="0"/></svg>'];
+const DEF={nome:'Mr. Lillo Café',logo:0,col:'#f47b20',eur:0.5,bon:10,rag:80,lat:41.8542,lng:12.5668,gid:'',premi:[{ic:'☕',t:'Caffè Lavazza gratis',p:50},{ic:'🥐',t:'Cornetto Acquaviva + caffè',p:90},{ic:'🍫',t:'Cioccolata calda Eraclea',p:110},{ic:'🍹',t:'Spritz all\'aperitivo',p:160}]};
+const load=()=>{try{return JSON.parse(localStorage.getItem(KEY))}catch(e){return null}};
+let S=load()||{pts:0,log:[],lastAuto:0,code:Math.random().toString(36).slice(2,8).toUpperCase(),cfg:DEF};
+S.cfg=Object.assign({},DEF,S.cfg);
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}};
+const $=id=>document.getElementById(id);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const fmt=t=>new Date(t).toLocaleString('it-IT',{weekday:'short',day:'numeric',hour:'2-digit',minute:'2-digit'});
+const C=()=>S.cfg;
+
+function add(n,ic,t,k,eur){S.pts=Math.max(0,S.pts+n);S.log.unshift({n,ic,t,k,eur:eur||0,at:Date.now()});S.log=S.log.slice(0,200);save();render()}
+
+function render(){
+const c=C(),P=c.premi.slice().sort((a,b)=>a.p-b.p);
+document.documentElement.style.setProperty('--brand',c.col);$('logo').innerHTML=LOGHI[c.logo||0];
+$('cardname').textContent='CARTA FEDELTÀ · '+c.nome.toUpperCase();
+$('tn').textContent=c.nome.toUpperCase()+' · adesso';
+$('pts').textContent=S.pts;$('pts2').textContent=S.pts;
+const nx=P.find(p=>p.p>S.pts);
+$('pbar').style.width=(nx?Math.min(100,S.pts/nx.p*100):100)+'%';
+$('next').textContent=nx?`Ancora ${nx.p-S.pts} punti per: ${nx.t} ${nx.ic}`:'Puoi prendere tutti i premi! 🎉';
+$('premi').innerHTML=P.map((p,i)=>{const ok=S.pts>=p.p;return `<div class="card row"><div class="ic">${esc(p.ic)}</div><div style="flex:1"><div class="t">${esc(p.t)}</div><div class="m">${p.p} punti${ok?'':' · ne mancano '+(p.p-S.pts)}</div>${ok?'':`<div class="mini"><i style="width:${S.pts/p.p*100}%"></i></div>`}</div><button class="sm" data-r="${c.premi.indexOf(p)}" ${ok?'':'disabled'}>Prendi</button></div>`}).join('');
+$('storico').innerHTML=S.log.length?S.log.map(l=>`<div class="card row"><span style="font-size:26px">${esc(l.ic)}</span><div style="flex:1"><div class="t" style="font-size:17px">${esc(l.t)}</div><div class="m">${fmt(l.at)}</div></div><span class="${l.n>=0?'plus':'minus'}">${l.n>=0?'+':'−'}${Math.abs(l.n)}</span></div>`).join(''):'<div class="card"><div class="t">Ancora nessun movimento</div><div class="m">Passa al locale o mostra il QR alla cassa per i primi punti.</div></div>';
+$('ccode').textContent=S.code;
+$('regola').textContent=`Regola: 1 punto ogni ${c.eur.toFixed(2).replace('.',',')} €`;
+$('b-rev').href=c.gid?'https://search.google.com/local/writereview?placeid='+encodeURIComponent(c.gid):'https://www.google.com/maps/search/'+encodeURIComponent(c.nome);
+const m=new Date().getMonth(),L=S.log.filter(l=>new Date(l.at).getMonth()===m);
+$('k-vis').textContent=L.filter(l=>l.k==='v'||l.k==='s').length;
+$('k-pts').textContent=L.filter(l=>l.n>0).reduce((a,l)=>a+l.n,0);
+$('k-pre').textContent=L.filter(l=>l.k==='r').length;
+$('k-eur').textContent=L.reduce((a,l)=>a+(l.eur||0),0).toFixed(0)+' €';
+}
+
+function fillCfg(){const c=C();$('s-nome').value=c.nome;$('s-col').value=c.col;$('s-eur').value=c.eur;$('s-bon').value=c.bon;$('s-rag').value=c.rag;$('s-lat').value=c.lat;$('s-lng').value=c.lng;$('s-gid').value=c.gid;for(const b of document.querySelectorAll('[data-logo]')){b.innerHTML=LOGHI[+b.dataset.logo];b.style.borderColor=(+b.dataset.logo===(c.logo||0))?'var(--or)':'';b.setAttribute('aria-pressed',+b.dataset.logo===(c.logo||0))}
+$('ed-premi').innerHTML=c.premi.map((p,i)=>`<div class="card"><div class="g2" style="grid-template-columns:64px minmax(0,1fr)"><div><label for="pi${i}" style="margin-top:0">Icona</label><input id="pi${i}" data-f="ic" data-i="${i}" value="${esc(p.ic)}"></div><div><label for="pt${i}" style="margin-top:0">Premio</label><input id="pt${i}" data-f="t" data-i="${i}" value="${esc(p.t)}"></div></div><div class="row" style="margin-top:10px;align-items:flex-end"><div style="flex:1"><label for="pp${i}" style="margin-top:0">Punti</label><input id="pp${i}" type="number" min="1" data-f="p" data-i="${i}" value="${p.p}"></div><button type="button" class="sm x" data-del="${i}" aria-label="Elimina premio">✕</button></div></div>`).join('')}
+
+let tmr;
+function toast(t,s,ic){$('tt').textContent=t;$('ts').textContent=s;$('toast').querySelector('.ic').textContent=ic||'🎉';$('toast').classList.add('on');clearTimeout(tmr);tmr=setTimeout(()=>$('toast').classList.remove('on'),4200);
+try{if('Notification'in window&&Notification.permission==='granted')new Notification(t,{body:s})}catch(e){}}
+
+function arrivo(){
+if(new Date(S.lastAuto).toDateString()===new Date().toDateString()){toast('Carta già attiva ✅','I punti di oggi li hai già presi. Torna domani!','✅');return}
+S.lastAuto=Date.now();add(C().bon,'📍','Sei passato al locale','v');
+$('state').textContent='Sei al locale: carta attiva ✅';
+toast(`Carta attivata! +${C().bon} punti`,'Benvenuto da '+C().nome+' ☕','🎉');
+}
+function dist(a,b,c,d){const R=6371e3,r=Math.PI/180,x=(c-a)*r,y=(d-b)*r,h=Math.sin(x/2)**2+Math.cos(a*r)*Math.cos(c*r)*Math.sin(y/2)**2;return 2*R*Math.asin(Math.sqrt(h))}
+function watch(){try{navigator.geolocation&&navigator.geolocation.watchPosition(p=>{if(dist(p.coords.latitude,p.coords.longitude,C().lat,C().lng)<=C().rag)arrivo()},()=>{},{enableHighAccuracy:true,maximumAge:60000})}catch(e){}}
+
+function qr(el,txt,size){el.innerHTML='';try{new QRCode(el,{text:txt,width:size,height:size})}catch(e){el.textContent='QR non disponibile'}}
+function go(v){for(const s of document.querySelectorAll('section'))s.classList.toggle('hide',s.id!=='v-'+v);
+for(const b of document.querySelectorAll('nav button'))b.dataset.go===v?b.setAttribute('aria-current','page'):b.removeAttribute('aria-current');
+window.scrollTo(0,0);
+if(v==='qr')qr($('qr'),'CARTA:'+S.code,220);
+if(v==='locale'){qr($('qrb'),location.href.split('#')[0]+'#carta',180);fillCfg()}}
+function tab(t){for(const b of document.querySelectorAll('[data-tab]'))b.setAttribute('aria-pressed',b.dataset.tab===t);for(const k of['cassa','stat','imp'])$('t-'+k).classList.toggle('hide',k!==t)}
+
+document.addEventListener('click',e=>{
+const g=e.target.closest('[data-go]');if(g)go(g.dataset.go);
+const tb=e.target.closest('[data-tab]');if(tb)tab(tb.dataset.tab);
+const r=e.target.closest('[data-r]');if(r){const p=C().premi[+r.dataset.r];if(p&&S.pts>=p.p){add(-p.p,'🎁',p.t+' preso','r');toast('Premio pronto! '+p.ic,'Mostra questo messaggio al barista','🎁')}}
+const lg=e.target.closest('[data-logo]');if(lg){C().logo=+lg.dataset.logo;save();render();fillCfg()}
+const d=e.target.closest('[data-del]');if(d){C().premi.splice(+d.dataset.del,1);fillCfg()}
+});
+document.addEventListener('input',e=>{const f=e.target.dataset.f;if(f){const p=C().premi[+e.target.dataset.i];p[f]=f==='p'?Math.max(1,parseInt(e.target.value)||1):e.target.value}});
+$('b-addp').onclick=()=>{C().premi.push({ic:'🎁',t:'Nuovo premio',p:100});fillCfg()};
+$('t-imp').onsubmit=e=>{e.preventDefault();const c=C(),n=x=>parseFloat($(x).value);
+c.nome=$('s-nome').value.trim()||DEF.nome;c.col=$('s-col').value;c.eur=n('s-eur')>0?n('s-eur'):DEF.eur;c.bon=Math.max(0,parseInt($('s-bon').value)||0);c.rag=Math.max(20,parseInt($('s-rag').value)||80);
+if(!isNaN(n('s-lat')))c.lat=n('s-lat');if(!isNaN(n('s-lng')))c.lng=n('s-lng');c.gid=$('s-gid').value.trim();
+save();render();toast('Impostazioni salvate ✅','La carta dei clienti è aggiornata','✅')};
+$('b-near').onclick=()=>{try{'Notification'in window&&Notification.permission==='default'&&Notification.requestPermission()}catch(e){}arrivo()};
+$('f-cassa').onsubmit=e=>{e.preventDefault();const v=parseFloat(String($('imp').value).replace(',','.'));if(!(v>0))return;
+const cc=$('ccli').value.trim().toUpperCase();if(cc&&cc!==S.code){toast('Codice non trovato','Controlla il codice sotto il QR del cliente','⚠️');return}
+const n=Math.floor(v/C().eur);add(n,'☕','Spesa di '+v.toFixed(2).replace('.',',')+' €','s',v);$('imp').value='';toast('+'+n+' punti 🎉','Grazie per la visita!','☕')};
+$('b-reset').onclick=()=>{S={pts:0,log:[],lastAuto:0,code:S.code,cfg:C()};save();render();toast('Carta azzerata','Puoi ricominciare la prova','🔄')};
+render();watch();
+if(location.hash==='#locale')go('locale');
+}
+</script>
+</body>
+</html>
